@@ -20,8 +20,13 @@ fn main() {
         }
 
         let mut lexer = src::lexer::Lexer::new(user_input.trim().to_string());
-        let token = lexer.generate_tokens();
+        let tokens = lexer.generate_tokens();
 
-        println!("{}", token.value);
+        for token in tokens {
+            std::io::stdout().flush().unwrap();
+            print!("{}, ", token.__repr__());
+        }
+
+        println!("");
     }
 }

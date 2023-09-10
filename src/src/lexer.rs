@@ -21,29 +21,39 @@ impl Lexer {
         return lexer;
     }
 
-    pub fn generate_tokens(&mut self) -> Token {
+    pub fn generate_tokens(&mut self) -> Vec<Token> {
+        let mut vec: Vec<Token> = Vec::new();
+        let mut been_in_while_loop: bool = false;
+
         while self.current_char != '\0' {
             if self.current_char.is_whitespace() {
                 self.advance();
                 continue;
             } else if self.current_char == '.' || self.current_char.is_numeric() {
-                return self.generate_number()
+                vec.push(self.generate_number());
             } else if self.current_char == '+' {
                 self.advance();
-                return Token { _type: TokenType::PLUS, value: "".to_string() }
+                vec.push(Token { _type: TokenType::PLUS, value: "".to_string() });
             } else if self.current_char == '-' {
                 self.advance();
-                return Token { _type: TokenType::MINUS, value: "".to_string() }
+                vec.push(Token { _type: TokenType::MINUS, value: "".to_string() });
             } else if self.current_char == '*' {
                 self.advance();
-                return Token { _type: TokenType::MULTIPLY, value: "".to_string() }
+                vec.push(Token { _type: TokenType::MULTIPLY, value: "".to_string() });
             } else if self.current_char == '/' {
                 self.advance();
-                return Token { _type: TokenType::DIVIDE, value: "".to_string() }
+                vec.push(Token { _type: TokenType::DIVIDE, value: "".to_string() });
             }
+
+            been_in_while_loop = true;
         }
 
-        return Token { _type: TokenType::NULL, value: "".to_string() }
+        if !been_in_while_loop {
+            vec.push(Token { _type: TokenType::NULL, value: "".to_string() });
+        }
+
+        return vec;
+
     }
 
     pub fn generate_number(&mut self) -> Token {

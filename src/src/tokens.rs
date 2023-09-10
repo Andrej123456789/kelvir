@@ -27,6 +27,7 @@ impl Token {
             TokenType::DIVIDE => return "DIVIDE".to_string(),
             TokenType::LPAREN => return "LPAREN".to_string(),
             TokenType::RPAREN => return "RPAREN".to_string(),
+            TokenType::NULL => return "NULL".to_string(),
 
             _ => return "N/A".to_string(),
         }
@@ -34,7 +35,7 @@ impl Token {
 
     pub fn __repr__(&self) -> String {
         if self.value != "" {
-            return self.enum_to_string() + &format!("{}", self.value);
+            return self.enum_to_string() + ": " + &format!("{}", self.value);
         }
 
         return self.enum_to_string();
