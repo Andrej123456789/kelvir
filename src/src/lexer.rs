@@ -8,6 +8,13 @@ pub struct Lexer {
 
 impl Lexer {
     fn advance(&mut self) {
+        if self.iter.first_run {
+            self.iter.first_run = false;
+
+            self.current_char = self.iter.first();
+            return;
+        }
+
         self.current_char = self.iter.next()
     }
 

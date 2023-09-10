@@ -1,6 +1,7 @@
 pub struct Iterator {
     text: String,
     id: usize,
+    pub first_run: bool
 }
 
 impl Iterator {
@@ -8,7 +9,12 @@ impl Iterator {
         Iterator {
             text: _text,
             id: 0,
+            first_run: true,
         }
+    }
+
+    pub fn first(&self) -> char {
+        return self.text.chars().nth(0).unwrap();
     }
 
     pub fn next(&mut self) -> char {
