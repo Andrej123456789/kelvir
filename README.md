@@ -4,6 +4,6 @@ Math interpreter & Rust rewrite of [py-simple-math-interpreter](https://github.c
 
 ## TODO
 - [x] Episode 1
-- [ ] Episode 2
+- [x] Episode 2
 - [ ] Episode 3
 - [ ] Episode 4

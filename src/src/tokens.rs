@@ -1,6 +1,7 @@
 #![allow(unreachable_patterns)]
 #![allow(dead_code)]
 
+#[derive(Clone)]
 pub enum TokenType {
     NUMBER,
     PLUS,
@@ -12,6 +13,7 @@ pub enum TokenType {
     NULL,
 }
 
+#[derive(Clone)]
 pub struct Token {
     pub _type: TokenType,
     pub value: String,

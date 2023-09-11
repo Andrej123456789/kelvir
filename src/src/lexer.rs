@@ -1,26 +1,28 @@
-use crate::iterator;
 use super::tokens::{Token, TokenType};
 
-pub struct Lexer {
-    iter: iterator::Iterator,
+pub struct Lexer
+{
+    iter: Vec<char>,
+    pos: usize,
     current_char: char,
+    
 }
 
-impl Lexer {
+impl Lexer
+{
     fn advance(&mut self) {
-        if self.iter.first_run {
-            self.iter.first_run = false;
-
-            self.current_char = self.iter.first();
-            return;
+        if self.pos >= self.iter.len() {
+            self.current_char = '\0';
+        } else {
+            self.current_char = self.iter[self.pos];
+            self.pos += 1;
         }
-
-        self.current_char = self.iter.next()
     }
 
     pub fn new(text: String) -> Self {
         let mut lexer = Lexer {
-            iter: iterator::Iterator::new(text),
+            iter: text.chars().collect(),
+            pos: 0,
             current_char: '\0',
         };
 

@@ -1,9 +1,10 @@
 use std::io::Write;
 
-mod iterator;   
 mod src {
     pub mod tokens;
     pub mod lexer;
+    pub mod nodes;
+    pub mod parser;
 }
 
 fn main() {
@@ -22,9 +23,35 @@ fn main() {
         let mut lexer = src::lexer::Lexer::new(user_input.trim().to_string());
         let tokens = lexer.generate_tokens();
 
-        for token in tokens {
-            std::io::stdout().flush().unwrap();
-            print!("{}, ", token.__repr__());
+        let mut parser = src::parser::Parser::new(tokens);
+        let tree = parser.parse();
+
+        match tree {
+            src::nodes::ALL_VARIANT::Number(number_rc) => {
+                let number = &*number_rc; 
+                println!("{}", number.value)
+            }
+            src::nodes::ALL_VARIANT::Add(_) => {
+                println!("Add")
+            }
+            src::nodes::ALL_VARIANT::Sub(_) => {
+                println!("Sub")
+            },
+            src::nodes::ALL_VARIANT::Mul(_) => {
+                println!("Mul")
+            },
+            src::nodes::ALL_VARIANT::Div(_) => {
+                println!("Div")
+            }
+            src::nodes::ALL_VARIANT::Plus(_) => {
+                println!("Plus")
+            },
+            src::nodes::ALL_VARIANT::Minus(_) => {
+                println!("Minus")
+            },
+            src::nodes::ALL_VARIANT::EmptyNode() => {
+                println!("NULL")
+            },
         }
 
         println!("");
