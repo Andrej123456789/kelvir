@@ -5,5 +5,5 @@ Math interpreter & Rust rewrite of [py-simple-math-interpreter](https://github.c
 ## TODO
 - [x] Episode 1
 - [x] Episode 2
-- [ ] Episode 3
+- [x] Episode 3
 - [ ] Episode 4

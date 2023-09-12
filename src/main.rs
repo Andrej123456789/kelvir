@@ -1,54 +1,14 @@
 use std::io::Write;
 
+use crate::src::{nodes::ALL_VARIANT};
+
 mod src {
     pub mod tokens;
     pub mod lexer;
     pub mod nodes;
     pub mod parser;
-}
-
-fn match_node(node: src::nodes::ALL_VARIANT) {
-    match node {
-        src::nodes::ALL_VARIANT::Number(number_rc) => {
-            let number: &src::nodes::NumberNode = &*number_rc; 
-            println!("{}", number.value)
-        }
-        src::nodes::ALL_VARIANT::Add(rc) => {
-            let node: &src::nodes::AddNode = &*rc;
-
-            match_node(node.node_a.clone());
-            match_node(node.node_b.clone());
-        }
-        src::nodes::ALL_VARIANT::Sub(rc) => {
-            let node: &src::nodes::SubtractNode = &*rc;
-
-            match_node(node.node_a.clone());
-            match_node(node.node_b.clone());
-        },
-        src::nodes::ALL_VARIANT::Mul(rc) => {
-            let node: &src::nodes::MultiplyNode = &*rc;
-
-            match_node(node.node_a.clone());
-            match_node(node.node_b.clone());
-        },
-        src::nodes::ALL_VARIANT::Div(rc) => {
-            let node: &src::nodes::DivideNode = &*rc;
-
-            match_node(node.node_a.clone());
-            match_node(node.node_b.clone());
-        }
-        src::nodes::ALL_VARIANT::Plus(rc) => {
-            let node: &src::nodes::PlusNode = &*rc;
-            match_node(node.node.clone());
-        },
-        src::nodes::ALL_VARIANT::Minus(rc) => {
-            let node: &src::nodes::MinusNode = &*rc;
-            match_node(node.node.clone());
-        },
-        src::nodes::ALL_VARIANT::EmptyNode() => {
-            println!("NULL")
-        },
-    }
+    pub mod values;
+    pub mod interpreter;
 }
 
 fn main() {
@@ -70,6 +30,17 @@ fn main() {
         let mut parser = src::parser::Parser::new(tokens);
         let tree = parser.parse();
 
-        match_node(tree)
+        match tree {
+            ALL_VARIANT::EmptyNode() => {
+                continue;
+            }
+
+            _ => {}
+        };
+
+        let interpreter = src::interpreter::Interpreter{};
+        let value = interpreter.visit(tree);
+
+        println!("{}", value.__repr__());
     }
 }
