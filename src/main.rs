@@ -11,6 +11,9 @@ mod src {
     pub mod interpreter;
 }
 
+#[cfg(test)]
+mod tests;
+
 fn main() {
     loop {
         print!("kelvir > ");
