@@ -3,6 +3,7 @@
 
 use std::{rc::Rc};
 
+#[derive(Clone)]
 pub enum ALL_VARIANT {
     Number(Rc<NumberNode>),
 
@@ -33,6 +34,7 @@ impl NumberNode {
     }
 }
 
+#[derive(Clone)]
 pub struct AddNode {
     pub node_a: ALL_VARIANT,
     pub node_b: ALL_VARIANT,
@@ -48,9 +50,10 @@ impl AddNode {
     }
 }
 
+#[derive(Clone)]
 pub struct SubtractNode {
-    node_a: ALL_VARIANT,
-    node_b: ALL_VARIANT,
+    pub node_a: ALL_VARIANT,
+    pub node_b: ALL_VARIANT,
 }
 
 impl SubtractNode {
@@ -63,9 +66,10 @@ impl SubtractNode {
     }
 }
 
+#[derive(Clone)]
 pub struct MultiplyNode {
-    node_a: ALL_VARIANT,
-    node_b: ALL_VARIANT,
+    pub node_a: ALL_VARIANT,
+    pub node_b: ALL_VARIANT,
 }
 
 impl MultiplyNode {
@@ -78,9 +82,10 @@ impl MultiplyNode {
     }
 }
 
+#[derive(Clone)]
 pub struct DivideNode {
-    node_a: ALL_VARIANT,
-    node_b: ALL_VARIANT,
+    pub node_a: ALL_VARIANT,
+    pub node_b: ALL_VARIANT,
 }
 
 impl DivideNode {
@@ -93,8 +98,9 @@ impl DivideNode {
     }
 }
 
+#[derive(Clone)]
 pub struct PlusNode {
-    node: ALL_VARIANT,
+    pub node: ALL_VARIANT,
 }
 
 impl PlusNode {
@@ -107,8 +113,9 @@ impl PlusNode {
     }
 }
 
+#[derive(Clone)]
 pub struct MinusNode {
-    node: ALL_VARIANT,
+    pub node: ALL_VARIANT,
 }
 
 impl MinusNode {

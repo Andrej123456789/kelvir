@@ -7,6 +7,50 @@ mod src {
     pub mod parser;
 }
 
+fn match_node(node: src::nodes::ALL_VARIANT) {
+    match node {
+        src::nodes::ALL_VARIANT::Number(number_rc) => {
+            let number: &src::nodes::NumberNode = &*number_rc; 
+            println!("{}", number.value)
+        }
+        src::nodes::ALL_VARIANT::Add(rc) => {
+            let node: &src::nodes::AddNode = &*rc;
+
+            match_node(node.node_a.clone());
+            match_node(node.node_b.clone());
+        }
+        src::nodes::ALL_VARIANT::Sub(rc) => {
+            let node: &src::nodes::SubtractNode = &*rc;
+
+            match_node(node.node_a.clone());
+            match_node(node.node_b.clone());
+        },
+        src::nodes::ALL_VARIANT::Mul(rc) => {
+            let node: &src::nodes::MultiplyNode = &*rc;
+
+            match_node(node.node_a.clone());
+            match_node(node.node_b.clone());
+        },
+        src::nodes::ALL_VARIANT::Div(rc) => {
+            let node: &src::nodes::DivideNode = &*rc;
+
+            match_node(node.node_a.clone());
+            match_node(node.node_b.clone());
+        }
+        src::nodes::ALL_VARIANT::Plus(rc) => {
+            let node: &src::nodes::PlusNode = &*rc;
+            match_node(node.node.clone());
+        },
+        src::nodes::ALL_VARIANT::Minus(rc) => {
+            let node: &src::nodes::MinusNode = &*rc;
+            match_node(node.node.clone());
+        },
+        src::nodes::ALL_VARIANT::EmptyNode() => {
+            println!("NULL")
+        },
+    }
+}
+
 fn main() {
     loop {
         print!("kelvir > ");
@@ -26,34 +70,6 @@ fn main() {
         let mut parser = src::parser::Parser::new(tokens);
         let tree = parser.parse();
 
-        match tree {
-            src::nodes::ALL_VARIANT::Number(number_rc) => {
-                let number = &*number_rc; 
-                println!("{}", number.value)
-            }
-            src::nodes::ALL_VARIANT::Add(_) => {
-                println!("Add")
-            }
-            src::nodes::ALL_VARIANT::Sub(_) => {
-                println!("Sub")
-            },
-            src::nodes::ALL_VARIANT::Mul(_) => {
-                println!("Mul")
-            },
-            src::nodes::ALL_VARIANT::Div(_) => {
-                println!("Div")
-            }
-            src::nodes::ALL_VARIANT::Plus(_) => {
-                println!("Plus")
-            },
-            src::nodes::ALL_VARIANT::Minus(_) => {
-                println!("Minus")
-            },
-            src::nodes::ALL_VARIANT::EmptyNode() => {
-                println!("NULL")
-            },
-        }
-
-        println!("");
+        match_node(tree)
     }
 }
